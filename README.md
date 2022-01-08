@@ -13,5 +13,9 @@ I have developed a working prototype of a 360° parking sensor system for my car
 
 
 
-https://user-images.githubusercontent.com/79868134/148660400-b78e179f-ded5-4cf3-bbce-cf0cad932aa1.mov
+
+https://user-images.githubusercontent.com/79868134/148660865-fdb9ab9b-8686-494c-ac18-2fb7ecea867f.mp4
+
+
+
 

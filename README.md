@@ -1,5 +1,5 @@
 # ParkingSensorSystem
-I have developed a working prototype of a 360° parking sensor system for my car that is run on a raspberry pi 3 using 6 JSN-SR04T waterproof ultrasonic sensors. The entire application is written in python using the pygame library for the GUI which will be displayed on a 7" touchscreen mounted in the dash of the vehicle. The sensors are interfaced with using the GPIO pins on the Raspberry Pi and using the RPi.GPIO python library. The code can be viewed in the ParkingSensor.py file. 
+I have developed a working prototype of a 360° parking sensor system for my 2003 Toyota Celica that is run on a raspberry pi 3 using 6 JSN-SR04T waterproof ultrasonic sensors. The entire application is written in python using the pygame library for the GUI which will be displayed on a 7" touchscreen mounted in the dash of the vehicle. The sensors are interfaced with using the GPIO pins on the Raspberry Pi and using the RPi.GPIO python library. The code can be viewed in the ParkingSensor.py file. 
 
 ### GUI Design
 <img width="802" alt="Screen Shot 2022-01-08 at 3 58 56 PM" src="https://user-images.githubusercontent.com/79868134/148660214-ff3df927-7c4d-40aa-8da6-137887b97a88.png">

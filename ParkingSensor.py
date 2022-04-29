@@ -6,6 +6,9 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 
+    
+        
+
 #set up pygame window
 mainClock = pygame.time.Clock()
 from pygame.locals import *
@@ -30,6 +33,36 @@ red = pygame.color.Color(255, 0, 0)
 grey = pygame.color.Color(192, 192, 192)
 white = pygame.color.Color(255, 255, 255)
 
+class button():
+    
+    clicked = 1
+    #function to set up button object
+    def __init__(self, color, x,y,width,height, text= ''):
+        self.color = color
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.text = text
+    #method to draw button on screen
+    def draw(self, win, outline = None):
+        if outline:
+            pygame.draw.rect(win, outline, (self.x-2, self.y-2, self.width+4, self.height+4), 0)
+        
+        pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height), 0)
+        
+        if self.text != '':
+            font = pygame.font.SysFont('comicsans', 40)
+            text = font.render(self.text, 1, (0,0,0))
+            screen.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
+    #method to check if mouse position is over the button
+    def isOver(self, pos):
+        #pos is the mouse position
+        if pos[0] > self.x and pos[0] < self.x + self.width:
+            if pos[1] > self.y and pos[1] < self.y + self.height:
+                return True
+        return False
+
 
 def sensor1():
     #define trig and echo pins on gpio
@@ -51,9 +84,11 @@ def sensor1():
     #save time that pulse was received
     while GPIO.input(ECHO)==1:
         pulseEnd = time.time()
-    
-    #calculate length of pulse
-    pulse = pulseEnd - pulseStart
+    try:
+        #calculate length of pulse
+        pulse = pulseEnd - pulseStart
+    except UnboundLocalError:
+        pass
     
     #calculate distance from pulse
     distance = pulse * 17150
@@ -85,10 +120,12 @@ def sensor2():
     #save time that pulse was received
     while GPIO.input(ECHO)==1:
         pulseEnd = time.time()
-    
-    #calculate length of pulse
-    pulse = pulseEnd - pulseStart
-    
+    try:
+        #calculate length of pulse
+        pulse = pulseEnd - pulseStart
+    except UnboundLocalError:
+        pass
+
     #calculate distance from pulse
     distance = pulse * 17150
     
@@ -119,8 +156,11 @@ def sensor3():
     while GPIO.input(ECHO)==1:
         pulseEnd = time.time()
     
-    #calculate length of pulse
-    pulse = pulseEnd - pulseStart
+    try:
+        #calculate length of pulse
+        pulse = pulseEnd - pulseStart
+    except UnboundLocalError:
+        pass
     
     #calculate distance from pulse
     distance = pulse * 17150
@@ -152,8 +192,11 @@ def sensor4():
     while GPIO.input(ECHO)==1:
         pulseEnd = time.time()
     
-    #calculate length of pulse
-    pulse = pulseEnd - pulseStart
+    try:
+        #calculate length of pulse
+        pulse = pulseEnd - pulseStart
+    except UnboundLocalError:
+        pass
     
     #calculate distance from pulse
     distance = pulse * 17150
@@ -187,8 +230,11 @@ def sensor5():
     while GPIO.input(ECHO)==1:
         pulseEnd = time.time()
     
-    #calculate length of pulse
-    pulse = pulseEnd - pulseStart
+    try:
+        #calculate length of pulse
+        pulse = pulseEnd - pulseStart
+    except UnboundLocalError:
+        pass
     
     #calculate distance from pulse
     distance = pulse * 17150
@@ -219,8 +265,11 @@ def sensor6():
     while GPIO.input(ECHO)==1:
         pulseEnd = time.time()
     
-    #calculate length of pulse
-    pulse = pulseEnd - pulseStart
+    try:
+        #calculate length of pulse
+        pulse = pulseEnd - pulseStart
+    except UnboundLocalError:
+        pass
     
     #calculate distance from pulse
     distance = pulse * 17150
@@ -450,8 +499,12 @@ def createRB():
 
     
 
+parkingButton = button((0,255,0), 15, 390, 150, 75, 'Parking On')
+
+
 
 def main_screen():
+    sensing = True
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -461,8 +514,10 @@ def main_screen():
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+        
         pygame.display.update()
         mainClock.tick(20)
+        
 
         #sets background of screen to white using RGB
         screen.fill((255,255,255))
@@ -470,12 +525,44 @@ def main_screen():
         screen.blit(background, (160, 0))
         # car image
         screen.blit(supra,(317, 50))
-        # display rectangles
-        createLF()
-        createRF()
-        createLB()
-        createMB()
-        createRB()
+        
+        
+        
+        #parkingButton.draw(screen, (0,0,0))
+        
+        pos = pygame.mouse.get_pos()
+        
+        
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            parkingButton.color = (0,255,0)
+            parkingButton.text = 'Parking On'
+            sensing = True
+
+                
+        if event.type == pygame.MOUSEBUTTONUP and parkingButton.isOver(pos):
+
+            parkingButton.color = (255,0,0)
+            parkingButton.text = 'Parking Off'
+            sensing = False
+
+
+        
+        parkingButton.draw(screen, (0,0,0))
+        
+        
+        
+        
+                
+        
+        
+        if sensing:
+            # display rectangles
+            createLF()
+            createRF()
+            createLB()
+            createMB()
+            createRB()
 
 
 # call screen function to display when code is run
